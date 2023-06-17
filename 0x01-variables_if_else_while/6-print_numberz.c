@@ -15,7 +15,7 @@ int index = 0;
 while (index < 10)
 
 {putchar(index);
-index++
+index++;
 }
 
 putchar('\n');
