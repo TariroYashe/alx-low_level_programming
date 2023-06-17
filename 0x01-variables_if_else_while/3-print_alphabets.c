@@ -11,7 +11,7 @@
 int main(void)
 
 {
-char alpha[52] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNODQRSTUVWXYZ";
+char alpha[52] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 int index;
 
