@@ -1,4 +1,4 @@
-#include <stdio>
+#include <stdio.h>
 
 /**
  * main - entry point
@@ -10,7 +10,7 @@
 int main(void)
 
 {
-int index=0;
+int index = 0;
 
 while (index < 10)
 
