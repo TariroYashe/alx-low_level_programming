@@ -20,13 +20,14 @@ if (y > x)
 {
 putchar(x);
 putchar(y);
-if (x != 56 || y != 57
+if (x != 56 || y != 57)
 
 putchar(',');
 putchar(' ');
 }
 }
 }
-putchar('\n')
-return (0)
+putchar('\n');
+return (0);
 }
+
