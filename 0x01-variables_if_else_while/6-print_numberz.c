@@ -10,12 +10,12 @@
 int main(void)
 
 {
-int index = 0;
+int index;
 
-while (index < 10)
+for (index = 48; index < 58; index++)
 
-{putchar(index);
-index++;
+{
+putchar(index);
 }
 
 putchar('\n');
