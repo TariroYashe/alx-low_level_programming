@@ -11,16 +11,16 @@
 int main(void)
 
 {
-int x = 97;
+char alpha[27] ="abcdefghijklmnopqrstuvwxyz";
+int i;
 
-while (x <= 122)
+for(i = 0; i < 27; 1++)
 
 {
-putchar(x);
-x++;
+putchar(alpha[i]);
 }
 
-putchar("x\n");
+putchar("\n");
 
 return (0);
 
