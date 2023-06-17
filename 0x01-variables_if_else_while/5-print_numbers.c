@@ -19,7 +19,7 @@ int index;
 for (index = 0; index < 10; index++)
 
 {
-printf("%d\n", index);
+printf("%d", index);
 }
 
 return (0);
