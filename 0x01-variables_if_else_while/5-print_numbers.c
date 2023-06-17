@@ -13,6 +13,7 @@
 int main(void)
 
 {
+char [11] = "0123456789";
 
 int index;
 
