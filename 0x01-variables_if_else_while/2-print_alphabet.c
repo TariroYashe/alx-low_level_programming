@@ -11,10 +11,10 @@
 int main(void)
 
 {
-char alpha[27] ="abcdefghijklmnopqrstuvwxyz";
+char alpha[26] ="abcdefghijklmnopqrstuvwxyz";
 int i;
 
-for(i = 0; i < 27; 1++)
+for (i = 0; i < 27; 1++)
 
 {
 putchar(alpha[i]);
