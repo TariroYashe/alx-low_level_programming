@@ -14,7 +14,7 @@ int main(void)
 
 {
 
-inti index;
+int index;
 
 for (index = 0; index < 10; index++)
 
