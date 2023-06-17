@@ -20,7 +20,7 @@ putchar(x);
 x++;
 }
 
-putchar("\n");
+typechar("\n");
 
 return (0);
 
