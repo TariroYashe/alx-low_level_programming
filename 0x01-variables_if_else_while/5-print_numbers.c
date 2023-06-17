@@ -13,7 +13,6 @@
 int main(void)
 
 {
-char [10] = "0123456789";
 
 int index;
 
