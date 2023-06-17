@@ -13,12 +13,15 @@
 int main(void)
 
 {
-int index;
+
+inti index;
 
 for (index = 0; index < 10; index++)
+
 {
-putchar(index);
+printf("%d\n", index);
 }
-putchar('\n);
+
 return (0);
+
 }
