@@ -20,14 +20,17 @@ if (y > x)
 {
 putchar('0' + x);
 putchar('0' + y);
+
 if (x != 8 || y != 9)
 
 putchar(',');
 putchar(' ');
+
 }
 }
 }
 putchar('\n');
+
 return (0);
 }
 
