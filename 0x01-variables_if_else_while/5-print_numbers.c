@@ -16,10 +16,11 @@ int main(void)
 
 int index;
 
-for (index = 0; index < 10; index++)
+for (index = 0; index <= 9; index++)
 
-
+{
 printf("%d", index);
+}
 printf("\n");
 
 return (0);
