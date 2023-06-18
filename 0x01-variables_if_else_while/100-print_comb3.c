@@ -18,8 +18,8 @@ for (y = 49; y <= 57; y++)
 {
 if (y > x)
 {
-putchar('0' + x);
-putchar('0' + y);
+putchar(x);
+putchar(y);
 if (x != 56 || y != 57)
 
 putchar(',');
