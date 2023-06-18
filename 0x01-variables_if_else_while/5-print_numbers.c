@@ -18,9 +18,9 @@ int index;
 
 for (index = 0; index < 10; index++)
 
-{
+
 printf("%d", index);
-}
+printf("\n");
 
 return (0);
 
