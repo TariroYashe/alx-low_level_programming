@@ -12,16 +12,14 @@ int main(void)
 {
 int x, y;
 
-for (x = 0; x <= 8; x++)
+for (x = 0; x < 10; x++)
 {
-for (y = 1; y <= 9; y++)
-{
-if (y > x)
+for (y = i + 1; y < 10; y++)
 {
 putchar('0' + x);
 putchar('0' + y);
 
-if (x != 8 || y != 9)
+if (!(x == 8 && y == 9))
 
 putchar(',');
 putchar(' ');
@@ -32,4 +30,3 @@ putchar(' ');
 putchar('\n');
 return (0);
 }
-
