@@ -19,7 +19,9 @@ for (y = x + 1; y < 10; y++)
 putchar('0' + x);
 putchar('0' + y);
 
-if (!(x == 8 && y == 9))
+/*if (!(x == 8 && y == 9))*/
+
+if (x != 8 || y != 9)
 
 putchar(',');
 putchar(' ');
