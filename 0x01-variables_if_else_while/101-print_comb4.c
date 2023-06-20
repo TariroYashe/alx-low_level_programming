@@ -13,11 +13,11 @@ int main(void)
 {
 int x, y, z;
 
-for (x = 0; x < 8; x++)
+for (x = 0; x < 7; x++)
 {
-for (y = x + 1; y < 9; y++)
+for (y = x + 1; y < 8; y++)
 {
-for (z = x + 2; z < 10; z++)
+for (z = x + 2; z < 9; z++)
 
 {
 putchar('0' + x);
