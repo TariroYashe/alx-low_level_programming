@@ -13,18 +13,18 @@ int main(void)
 {
 int x, y, z;
 
-for (x = 48; x < 58; x++)
+for (x = 0; x < 8; x++)
 {
-for (y = 49; y < 58; y++)
+for (y = x + 1; y < 9; y++)
 {
-for (z = 50; x < 58; z++)
+for (z = x + 2; z < 10; z++)
+
 {
-if (z > y && y > x)
-{
-putchar(x);
-putchar(y);
-putchar(z);
-if (x != 55 || y != 56)
+putchar('0' + x);
+putchar('0' + y);
+putchar('0' + z);
+
+if (x != 7 || y != 8 || z != 9)
 {
 putchar(',');
 putchar(' ');
@@ -32,7 +32,7 @@ putchar(' ');
 }
 }
 }
-}
+
 putchar('\n');
 return (0);
 }
