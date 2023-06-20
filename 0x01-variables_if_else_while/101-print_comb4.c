@@ -13,14 +13,11 @@ int main(void)
 {
 int x, y, z;
 
-for (x = 0; x < 7; x++)
+for (x = 0; x <= 7; x++)
 {
-for (y = x + 1; y < 8; y++)
+for (y = x + 1; y <= 8; y++)
 {
-for (z = y + 1; z < 9; z++)
-	
-{
-if (z > y && y > x)
+for (z = y + 1; z <= 9; z++)
 
 {
 putchar('0' + x);
@@ -31,7 +28,6 @@ if (x != 7 || y != 8 || z != 9)
 {
 putchar(',');
 putchar(' ');
-}
 }
 }
 }
