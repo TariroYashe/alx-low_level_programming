@@ -17,7 +17,7 @@ for (x = 0; x < 7; x++)
 {
 for (y = x + 1; y < 8; y++)
 {
-for (z = x + 2; z < 9; z++)
+for (z = y + 1; z < 9; z++)
 
 {
 putchar('0' + x);
