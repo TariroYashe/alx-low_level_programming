@@ -18,7 +18,10 @@ for (x = 0; x < 7; x++)
 for (y = x + 1; y < 8; y++)
 {
 for (z = y + 1; z < 9; z++)
-
+	
+{
+if (z > y && y > x)
+}
 {
 putchar('0' + x);
 putchar('0' + y);
