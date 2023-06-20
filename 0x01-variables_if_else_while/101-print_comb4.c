@@ -21,7 +21,7 @@ for (z = y + 1; z < 9; z++)
 	
 {
 if (z > y && y > x)
-}
+
 {
 putchar('0' + x);
 putchar('0' + y);
@@ -31,6 +31,7 @@ if (x != 7 || y != 8 || z != 9)
 {
 putchar(',');
 putchar(' ');
+}
 }
 }
 }
