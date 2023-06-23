@@ -1,23 +1,30 @@
 #include "main.h"
 
 /**
-* print_line - function that checks for uppercase character.
-* @n: is the integer for the paramaters of my function
-* Return: 0
+* print_line -  a function that draws a straight line in the terminal.
+* @n: n is the num of times
+*
+* Description: "a function that draws a straight line in the terminal."
+*
+* Return: A line of characters
 */
+
 void print_line(int n)
 {
-int a = 0;
+int count;
 
-if (n > 0)
+count = 0;
+while (count < n)
 {
-while (a <= n)
+if (n <= 0)
 {
-_putchar('_');
-a++;
-}
 _putchar('\n');
 }
 else
+{
+_putchar(95);
+count++;
+}
+}
 _putchar('\n');
 }
