@@ -1,24 +1,25 @@
 #include "main.h"
 
 /**
-* main - check the code.
+* _isalpha - check if a param is alpha
+* @c: int arg
 *
-* Return: Always 0.
+* Description: "A program that checks if an arg is alpha"
+*
+* Return: Always 0 (Success)
+*
 */
-int main(void)
 
+int _isalpha(int c)
 {
-int r;
+if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
 {
-r = _isalpha('H');
-_putchar(r + '0');
-r = _isalpha('o');
-_putchar(r + '0');
-r = _isalpha(108);
-_putchar(r + '0');
-r = _isalpha(';');
-_putchar(r + '0');
-_putchar('\n');
+return (1);
 }
+else
+{
 return (0);
+}
+
+_putchar('\n');
 }
