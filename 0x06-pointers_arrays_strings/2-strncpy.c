@@ -11,13 +11,13 @@
 
 char *_strncpy(char *dest, char *src, int n)
 {
-int size_in_bytes;
+int filesize;
 
-for (size_in_bytes = 0; size_in_bytes < n && src[size_in_bytes] != '\0'; size_in_bytes++)
-dest[size_in_bytes] = src[size_in_bytes];
+for (filesize = 0; filesize < n && src[filesize] != '\0'; filesize++)
+dest[filesize] = src[filesize];
 
-for (; size_in_bytes < n; size_in_bytes++)
-dest[size_in_bytes] = '\0';
+for (; filesize < n; filesize++)
+dest[filesize] = '\0';
 
 return (dest);
 }
