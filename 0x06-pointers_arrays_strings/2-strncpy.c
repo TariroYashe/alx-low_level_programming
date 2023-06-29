@@ -16,7 +16,7 @@ int size_in_bytes;
 for (size_in_bytes = 0; size_in_bytes < n && src[size_in_bytes] != '\0'; size_in_bytes++)
 dest[size_in_bytes] = src[size_in_bytes];
 
-for (size_in_bytes = 0; size_in_bytes < n; size_in_bytes++)
+for (; size_in_bytes < n; size_in_bytes++)
 dest[size_in_bytes] = '\0';
 
 return (dest);
