@@ -8,26 +8,26 @@
 char *cap_string(char *str)
 
 {
-int i;
-i = 0;
-while (str[i] != '\0')
+int count;
+count = 0;
+while (str[count] != '\0')
 if (str[0] >= 97 && str[0] <= 122)
 {
 str[0] = str[0] - 32;
 }
 
-if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
-str[i] == ',' || str[i] == ';' || str[i] == '.' ||
-str[i] == '!' || str[i] == '?' || str[i] == '"' ||
-str[i] == '(' || str[i] == ')' || str[i] == '{' ||
-str[i] == '}')
+if (str[count] == ' ' || str[count] == '\t' || str[count] == '\n' ||
+str[count] == ',' || str[count] == ';' || str[count] == '.' ||
+str[count] == '!' || str[count] == '?' || str[count] == '"' ||
+str[count] == '(' || str[count] == ')' || str[count] == '{' ||
+str[count] == '}')
 {
-if (str[i + 1] >= 97 && str[i + 1] <= 122)
+if (str[count + 1] >= 97 && str[count + 1] <= 122)
 {
-str[i + 1] = str[i + 1] - 32;
+str[count + 1] = str[count + 1] - 32;
 }
 
-i++;
+count++;
 }
 return (str);
 }
