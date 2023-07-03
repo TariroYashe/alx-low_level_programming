@@ -20,14 +20,12 @@ nish = 0;
 if (haystack[nish] == needle[nish])
 {
 
-do
-{
+do {
+
 if (needle[nish + 1] == '\0')
 return (haystack);
 nish++;
-}
-
-while (haystack[nish] == needle[nish]);
+} while (haystack[nish] == needle[nish]);
 }
 haystack++;
 }
