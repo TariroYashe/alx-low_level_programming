@@ -13,7 +13,7 @@ char *_strchr(char *s, char c)
 {
 int yashe;
 
-for (yashe = 0; s[yashe] >= '\n'; yashe++)
+for (yashe = 0; s[yashe] != '\n'; yashe++)
 {
 if (s[yashe] == c)
 return (s + yashe);
