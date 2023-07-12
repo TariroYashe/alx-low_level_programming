@@ -5,6 +5,7 @@
 * create_array - function that create an array of chars.
 * @size: the array size
 * @c: the initial value
+* Description: creates an array of chars
 * Return: a pointer to the array or NULL if it fails
 */
 
