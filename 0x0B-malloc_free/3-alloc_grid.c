@@ -1,48 +1,48 @@
 #include "main.h"
 #include <stdlib.h>
+#include <stddef.h>
 
 /**
-* alloc_grid - function that returns a pntr to a 2D array of int
-* @width: width input
-* @height: height input
-* Return pointer to 2D array
+* alloc_grid - returns a pointer to a 2D array of integers
+* @width: width
+* @height: height
+* Description: returns a pointer to a 2D array of integers
+* Return: 2D Array
 */
 
 int **alloc_grid(int width, int height)
 {
-int  **a;
-int i, j, k, l;
+int **ptr;
+int i, j;
 
 if (width <= 0 || height <= 0)
-return (NULL);
-a = malloc(sizeof(int *) * height);
-
-if (a == NULL)
 {
-free(a);
 return (NULL);
 }
+
+ptr = malloc(sizeof(int *) * height);
+
+if (ptr == NULL)
+{
+return (NULL);
+}
+
 for (i = 0; i < height; i++)
 {
-a[i] = malloc(sizeof(int) * width);
-if (a[i] == NULL)
+ptr[i] = malloc(sizeof(int) * width);
+if (ptr[i] == NULL)
 {
-for (j = i; j >= 0; j--)
+for (j = 0; j < i; j++)
 {
-free(a[j]);
+free(ptr[j]);
 }
-free(a);
+free(ptr);
 return (NULL);
 }
-}
-for (k = 0; k < height; k++)
+for (j = 0; j < width; j++)
 {
-for (l = 0; l < width; l++)
-{
-a[k][l] = 0;
+ptr[i][j] = 0;
 }
 }
-return (a);
+return (ptr);
 }
-
-
