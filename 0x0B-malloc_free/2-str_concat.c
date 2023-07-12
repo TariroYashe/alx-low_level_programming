@@ -19,7 +19,7 @@ s1 = "";
 if (s2 == NULL)
 s2 = "";
 
-while (s2[i])
+while (s1[i])
 i++;
 
 while (s2[j])
