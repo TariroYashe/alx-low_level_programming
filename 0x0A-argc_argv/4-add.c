@@ -1,40 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /**
-* main - adds positive numbers.
-* @argc: arg count
-* @argv: arr of args
+* main - function that adds positive numbers.
+* @argc: argument count
+* @argv: arguments variable
 *
-* Description: "adds positive numbers."
-*
-* Return: Always 0 (success) otherwise 1 (error)
-*
+* Return: always 0
 */
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-long int total = 0;
-int idx;
-int num;
+int i, j, sum = 0;
+char *yashe;
 
-if (argc == 1)
+
+if (argc < 2)
 {
 printf("0\n");
 return (0);
 }
 
-for (idx = 1; idx < argc; idx++)
-{
-num = atoi(argv[idx]);
 
-if (num <= 0 && argv[1][0] != '0')
+for (i = 1; argv[i]; i++)
+{
+j = strtol(argv[i], &yashe, 10);
+if (*yashe)
 {
 printf("Error\n");
 return (1);
 }
-total += num;
+else
+{
+sum += j;
 }
-printf("%ld\n", total);
+}
+printf("%d\n", sum);
+
+
 return (0);
 }
