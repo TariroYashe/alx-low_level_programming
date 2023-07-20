@@ -35,7 +35,7 @@ exit(2);
 arr = (char *)main;
 
 
-while (i = 0, i < bytes)
+for (i = 0; i < bytes; i++)
 {
 if (i == bytes - 1)
 {
@@ -43,7 +43,6 @@ printf("%02hhx\n", arr[i]);
 break;
 }
 printf("%02hhx ", arr[i]);
-i++;
 }
 return (0);
 }
