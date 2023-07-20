@@ -23,16 +23,12 @@ for (index = 0; index < n; index++)
 if (!separator)
 printf("%d", va_arg(numb, int));
 
-else if (separator && index== 0)
+else if (separator && index == 0)
 printf("%d", va_arg(numb, int));
 
 else
 printf("%s%d", separator, va_arg(numb, int));
 }
 va_end(numb);
-
 printf("\n");
 }
-
-
-
