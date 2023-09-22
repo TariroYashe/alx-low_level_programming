@@ -9,216 +9,89 @@
 */
 int main(int argc, char *argv[])
 {
-int elf;
+int fd;
+Elf64_Ehdr *header;
 if (argc != 2)
 {
-dprintf(STDERR_FILENO, "Usage: %s <ELF file>\n", argv[0]);
+fprintf(stderr, "Usage: %s <ELF file>\n", argv[0]);
 return (1);
 }
-elf = open(argv[1], O_RDONLY);
-if (elf == -1)
+fd = open(argv[1], O_RDONLY);
+if (fd == -1)
 {
-dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
+perror("Error opening file");
 return (1);
 }
-
-check_elf(elf);
-
+header = malloc(sizeof(Elf64_Ehdr));
+if (header == NULL)
+{
+perror("Error allocating memory");
+close_elf(fd);
+return (1);
+}
+if (read(fd, header, sizeof(Elf64_Ehdr)) == -1)
+{
+perror("Error reading file");
+free(header);
+close_elf(fd);
+return (1);
+}
+elf_check(header);
 printf("ELF Header:\n");
-display_magic(elf);
-display_class(elf);
-display_data(elf);
-display_version(elf);
-display_os_abi(elf);
-display_osabi(elf);
-display_type(elf);
-display_entry(elf);
-close(elf);
-
+display_magic(header);
+display_class(header);
+display_data(header);
+display_version(header);
+display_osabi(header);
+display_abi(header);
+display_type(header);
+display_entry(header);
+free(header);
+close_elf(fd);
 return (0);
 }
-/**
-* display_entry - Prints the entry point of an ELF header.
-* @elf: The file descriptor of the ELF file.
-*/
-void display_entry(int elf)
-{
-Elf64_Ehdr header;
-
-/* Read the ELF header into header */
-if (read(elf, &header, sizeof(Elf64_Ehdr)) != sizeof(Elf64_Ehdr))
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF entry point\n");
-exit(98);
-}
-
-printf(" Entry point address: ");
-
-if (header.e_ident[EI_DATA] == ELFDATA2MSB)
-{
-header.e_entry = ((header.e_entry << 8) & 0xFF00FF00) |
-((header.e_entry >> 8) & 0xFF00FF);
-header.e_entry = (header.e_entry << 16) | (header.e_entry >> 16);
-}
-
-/* Print the entry point address */
-if (header.e_ident[EI_CLASS] == ELFCLASS32)
-printf("%#x\n", (unsigned int)header.e_entry);
-else
-printf("%#lx\n", header.e_entry);
-}
-
 
 /**
-* display_osabi - display the ABI version of an ELF header.
-* @elf: The file descriptor of the ELF file.
+* elf_check - Function to check if the file is an ELF file
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure
 */
-void display_osabi(int elf)
+void elf_check(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
+if (memcmp(header->e_ident, ELFMAG, SELFMAG) != 0)
 {
-dprintf(STDERR_FILENO, "Error: Reading ELF ABI version\n");
+fprintf(stderr, "Error: Not an ELF file\n");
 exit(98);
-}
-
-printf(" ABI Version: %d\n", e_ident[EI_ABIVERSION]);
-}
-
-/**
-* display_type - display the type of an ELF header.
-* @elf: The file descriptor of the ELF file.
-*/
-void display_type(int elf)
-{
-Elf64_Ehdr header;
-unsigned int e_type;
-
-/* Read the ELF header into header */
-if (read(elf, &header, sizeof(Elf64_Ehdr)) != sizeof(Elf64_Ehdr))
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF type\n");
-exit(98);
-}
-
-e_type = header.e_type;
-
-if (header.e_ident[EI_DATA] == ELFDATA2MSB)
-e_type >>= 8;
-
-printf(" Type: ");
-
-/* Determine and print the ELF file type */
-switch (e_type)
-{
-case ET_NONE:
-printf("NONE (None)\n");
-break;
-case ET_REL:
-printf("REL (Relocatable file)\n");
-break;
-case ET_EXEC:
-printf("EXEC (Executable file)\n");
-break;
-case ET_DYN:
-printf("DYN (Shared object file)\n");
-break;
-case ET_CORE:
-printf("CORE (Core file)\n");
-break;
-default:
-printf("<unknown: %x>\n", e_type);
-}
-}
-
-
-/**
-* check_elf - Checks if a file is an ELF file.
-* @elf: The file descriptor of the ELF file.
-*
-* Description: If the file is not an ELF file, exit with code 98.
-*/
-void check_elf(int elf)
-{
-unsigned char e_ident[EI_NIDENT];
-int index;
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
-exit(98);
-}
-
-/* Verify the ELF magic numbers */
-for (index = 0; index < 4; index++)
-{
-if (e_ident[index] != 127 &&
-e_ident[index] != 'E' &&
-e_ident[index] != 'L' &&
-e_ident[index] != 'F')
-{
-dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
-exit(98);
-}
 }
 }
 
 /**
-* display_magic - display the magic numbers of an ELF header.
-* @elf: The file descriptor of the ELF file.
-*
-* Description: Magic numbers are separated by spaces.
+* display_magic - Function to print the magic numbers of the ELF header
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure
 */
-void display_magic(int elf)
+void display_magic(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-int index;
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF magic numbers\n");
-exit(98);
-}
-
+int i;
 printf(" Magic: ");
-
-/* Print the magic numbers */
-for (index = 0; index < EI_NIDENT; index++)
+for (i = 0; i < SELFMAG; i++)
 {
-printf("%02x", e_ident[index]);
-
-if (index == EI_NIDENT - 1)
-printf("\n");
-else
-printf(" ");
+printf("%02x ", header->e_ident[i]);
 }
+printf("\n");
 }
 
 /**
-* print_class - Prints the class of an ELF header.
-* @elf: The file descriptor of the ELF file.
+* display_class - Function to print the class (32-bit or 64-bit) of the ELF
+* header
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure
 */
-void display_class(int elf)
+void display_class(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF class\n");
-exit(98);
-}
-
 printf(" Class: ");
-
-/* Determine and print the ELF class (32-bit or 64-bit) */
-switch (e_ident[EI_CLASS])
+switch (header->e_ident[EI_CLASS])
 {
-case ELFCLASSNONE:
-printf("none\n");
-break;
 case ELFCLASS32:
 printf("ELF32\n");
 break;
@@ -226,33 +99,21 @@ case ELFCLASS64:
 printf("ELF64\n");
 break;
 default:
-printf("<unknown: %x>\n", e_ident[EI_CLASS]);
+printf("<unknown: %x>\n", header->e_ident[EI_CLASS]);
 }
 }
 
 /**
-* display_data -display the data of an ELF header.
-* @elf: The file descriptor of the ELF file.
+* display_data - Function to print the data format (endianess) of the ELF
+* header
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
 */
-void display_data(int elf)
+void display_data(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF data encoding\n");
-exit(98);
-}
-
 printf(" Data: ");
-
-/* Determine and print the data encoding (endianess) */
-switch (e_ident[EI_DATA])
+switch (header->e_ident[EI_DATA])
 {
-case ELFDATANONE:
-printf("none\n");
-break;
 case ELFDATA2LSB:
 printf("2's complement, little endian\n");
 break;
@@ -260,58 +121,30 @@ case ELFDATA2MSB:
 printf("2's complement, big endian\n");
 break;
 default:
-printf("<unknown: %x>\n", e_ident[EI_DATA]);
+printf("<unknown: %x>\n", header->e_ident[EI_DATA]);
 }
 }
 
 /**
-* display_version - Prints the version of an ELF header.
-* @elf: The file descriptor of the ELF file.
+* display_version - Function to print the ELF version
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
 */
-void display_version(int elf)
+void display_version(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF version\n");
-exit(98);
-}
-
-printf(" Version: %d", e_ident[EI_VERSION]);
-
-/* Print the version information */
-switch (e_ident[EI_VERSION])
-{
-case EV_CURRENT:
-printf(" (current)\n");
-break;
-default:
-printf("\n");
-break;
-}
+printf(" Version: %d (current)\n", header->e_ident[EI_VERSION]);
 }
 
 /**
-* display_os_abi - display the OS/ABI of an ELF header.
-* @elf: The file descriptor of the ELF file.
+* display_osabi - Function to print the operating system and ABI (Application
+* Binary Interface) of the ELF header
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
 */
-void display_os_abi(int elf)
+void display_osabi(Elf64_Ehdr *header)
 {
-unsigned char e_ident[EI_NIDENT];
-
-/* Read the ELF identification bytes into e_ident */
-if (read(elf, e_ident, EI_NIDENT) != EI_NIDENT)
-{
-dprintf(STDERR_FILENO, "Error: Reading ELF OS/ABI\n");
-exit(98);
-}
-
 printf(" OS/ABI: ");
-
-/* Determine and print the OS/ABI */
-switch (e_ident[EI_OSABI])
+switch (header->e_ident[EI_OSABI])
 {
 case ELFOSABI_NONE:
 printf("UNIX - System V\n");
@@ -344,6 +177,74 @@ case ELFOSABI_STANDALONE:
 printf("Standalone App\n");
 break;
 default:
-printf("<unknown: %x>\n", e_ident[EI_OSABI]);
+printf("<unknown: %x>\n", header->e_ident[EI_OSABI]);
+}
+}
+
+/**
+* display_abi - Function to print the ABI version
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
+*/
+void display_abi(Elf64_Ehdr *header)
+{
+printf(" ABI Version: %d\n", header->e_ident[EI_ABIVERSION]);
+}
+
+/**
+* display_type - Function to print the type of the ELF file
+* (e.g.executable, shared object, core dump)
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
+*/
+void display_type(Elf64_Ehdr *header)
+{
+printf(" Type: ");
+switch (header->e_type)
+{
+case ET_NONE:
+printf("NONE (None)\n");
+break;
+case ET_REL:
+printf("REL (Relocatable file)\n");
+break;
+case ET_EXEC:
+printf("EXEC (Executable file)\n");
+break;
+case ET_DYN:
+printf("DYN (Shared object file)\n");
+break;
+case ET_CORE:
+printf("CORE (Core file)\n");
+break;
+default:
+printf("<unknown: %x>\n", header->e_type);
+}
+}
+
+/**
+* display_entry - Function to print the entry point address of the ELF file
+* @header: is a pointer variable that will hold the memory address of an
+* Elf64_Ehdr structure.
+* Description: This function will display the entry point address as part of
+* the ELF header analysis when you run the program.
+*/
+void display_entry(Elf64_Ehdr *header)
+{
+printf(" Entry point address: %#lx\n", header->e_entry);
+}
+
+/**
+* close_elf - Function to close the ELF file
+* @elf: the file descriptor of the ELF file
+* Description: Closes the file descriptor associated with the ELF file,
+* and if it fails to close, it exits with an error code.
+*/
+void close_elf(int elf)
+{
+if (close(elf) == -1)
+{
+perror("Error closing file");
+exit(98);
 }
 }
