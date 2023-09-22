@@ -17,7 +17,14 @@ int append_text_to_file(const char *filename, char *text_content);
 char *create_buffer(char *fyle);
 void close_fyle(int file_descriptor);
 int main(int argc, char *argv[]);
-void display_error(const char *message);
-void display_elf_header(const Elf64_Ehdr *header);
+void check_elf(int elf);
+void display_magic(int elf);
+void display_class(int elf);
+void display_data(int elf);
+void display_version(int elf);
+void display_osabi(int elf);
+void display_os_abi(int elf);
+void display_type(int elf);
+void display_entry(int elf);
 
 #endif
