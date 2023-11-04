@@ -8,7 +8,7 @@
 hash_table_t *hash_table_create(unsigned long int size)
 {
 hash_table_t *new_table;
-unsigned long int i;
+unsigned long int index;
 
 if (size < 1)
 return (NULL);
@@ -28,8 +28,8 @@ return (NULL);
 
 new_table->size = size;
 /*Initialize all array elements to NULL*/
-for (i = 0; i < size; i++)
-new_table->array[i] = NULL;
+for (index = 0; index < size; index++)
+new_table->array[index] = NULL;
 
 return (new_table);
 }
