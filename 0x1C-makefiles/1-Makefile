@@ -1,11 +1,10 @@
 # Makefile for building the 'school' executable
 
-# Compilation options
+# Compiler
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror
 
 # Source files
-SRCS := main.c school.c
+SRC := main.c school.c
 
 # Output executable
 TARGET := school
@@ -14,8 +13,8 @@ TARGET := school
 all: $(TARGET)
 
 # Compilation rule
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
+$(TARGET): $(SRC)
+	$(CC) $(SRC) -o $(TARGET)
 
 # Clean rule
 clean:
