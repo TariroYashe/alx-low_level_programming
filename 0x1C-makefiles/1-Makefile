@@ -1,24 +1,6 @@
 # Makefile for building the 'school' executable
 
-# Compiler
-CC := gcc
-
-# Source files
-SRC := main.c school.c
-
-# Output executable
-TARGET := school
-
-# Build rule
-all: $(TARGET)
-
-# Compilation rule
-$(TARGET): $(SRC)
-	$(CC) $(SRC) -o $(TARGET)
-
-# Clean rule
-clean:
-	rm -f $(TARGET)
-
-# Phony target to avoid conflicts with file names
-.PHONY: all clean
+CC = gcc
+SRC = main.c school.c
+all: $(SRC)
+	$(CC) $(SRC) -o school
