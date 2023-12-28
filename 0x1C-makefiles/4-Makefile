@@ -1,0 +1,35 @@
+# Compiler
+CC = gcc
+
+# Source files
+SRC = main.c school.c
+
+# Object files derived from source files
+OBJ = $(SRC:.c=.o)
+
+# Executable name
+NAME = school
+
+# Command to remove files
+RM = rm -f
+
+# Compiler flags for warnings and errors
+CFLAGS = -Wall -Werror -Wextra -pedantic
+
+# Rule to build the executable using object files
+all: $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+# Rule to remove temporary files and the executable
+clean:
+	$(RM) *~ $(NAME)
+
+# Rule to remove only the object files
+oclean:
+	$(RM) $(OBJ)
+
+# Rule to remove all generated files, effectively cleaning the project
+fclean: clean oclean
+
+# Rule to clean and rebuild the project
+re: fclean all
